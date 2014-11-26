@@ -1,0 +1,33 @@
+apply plugin: 'java'
+
+sourceCompatibility = JavaVersion.VERSION_1_6
+targetCompatibility = JavaVersion.VERSION_1_6
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+allprojects {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'maven'
+
+    version = '1.0.0'
+    group = 'com.wmba'
+
+    test {
+        testLogging {
+            exceptionFormat "full"
+            events "started", "passed"
+            displayGranularity 2
+        }
+    }
+
+}

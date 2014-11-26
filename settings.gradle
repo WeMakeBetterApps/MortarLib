@@ -1,0 +1,5 @@
+rootProject.name = 'MortarLib'
+
+include 'lib'
+include 'generator'
+
