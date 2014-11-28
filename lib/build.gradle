@@ -1,33 +1,46 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'signing'
+
 configurations { providedCompile }
 
 sourceSets.main.compileClasspath += configurations.providedCompile
 sourceSets.test.compileClasspath += configurations.providedCompile
 sourceSets.test.runtimeClasspath += configurations.providedCompile
 
+version = '1.0.0'
+group = 'com.wemakebetterapps'
+
+//configurations {
+//    providedCompile
+//    providedCompile.extendsFrom(compile)
+//}
+//
+//configurations.main
+
 dependencies {
-    providedCompile 'com.squareup.flow:flow:0.8'
+    providedCompile 'com.squareup.flow:flow:0.7'
     providedCompile 'com.squareup.mortar:mortar:0.16'
     providedCompile 'com.google.code.gson:gson:2.2.+'
-
     providedCompile 'com.jakewharton:butterknife:5.1.+'
     providedCompile 'com.google.android:android:4.0.1.2'
     providedCompile files('libs/android-support-v4.jar')
 }
 
-configure(install.repositories.mavenInstaller) {
-    pom.project {
-        artifactId 'mortar-lib'
-        packaging 'jar'
-
-        licenses {
-            license {
-                name 'Apache License, Version 2.0'
-                url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                distribution 'repo'
-            }
-        }
-    }
-}
+//configure(install.repositories.mavenInstaller) {
+//    pom.project {
+//        artifactId 'mortar-lib'
+//        packaging 'jar'
+//
+//        licenses {
+//            license {
+//                name 'Apache License, Version 2.0'
+//                url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+//                distribution 'repo'
+//            }
+//        }
+//    }
+//}
 
 task sourcesJar(type: Jar, dependsOn:classes) {
     classifier = 'sources'
@@ -40,6 +53,57 @@ task javadocJar(type: Jar, dependsOn:javadoc) {
 }
 
 artifacts {
-    archives sourcesJar
-    archives javadocJar
+    archives javadocJar, sourcesJar
+}
+
+signing {
+    sign configurations.archives
+}
+
+archivesBaseName = "mortar-lib"
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            pom.project {
+                name 'MortarLib'
+                packaging 'jar'
+                // optionally artifactId can be defined here
+                artifactId = 'mortar-lib'
+                description 'Supports building Android apps using Square\'s Flow and Mortar.'
+                url 'https://github.com/WeMakeBetterApps/MortarLib'
+
+//                scm {
+//                    connection 'scm:svn:http://foo.googlecode.com/svn/trunk/'
+//                    developerConnection 'scm:svn:https://foo.googlecode.com/svn/trunk/'
+//                    url 'http://foo.googlecode.com/svn/trunk/'
+//                }
+
+                licenses {
+                    license {
+                        name 'The Apache License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'spierce7'
+                        name 'Scott Pierce'
+                        email 'scott@wemakebetterapps.com'
+                    }
+                }
+            }
+        }
+    }
 }

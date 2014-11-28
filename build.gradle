@@ -16,18 +16,4 @@ allprojects {
 }
 
 subprojects {
-    apply plugin: 'java'
-    apply plugin: 'maven'
-
-    version = '1.0.0'
-    group = 'com.wmba'
-
-    test {
-        testLogging {
-            exceptionFormat "full"
-            events "started", "passed"
-            displayGranularity 2
-        }
-    }
-
 }
