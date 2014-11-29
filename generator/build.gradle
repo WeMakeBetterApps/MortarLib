@@ -70,11 +70,11 @@ uploadArchives {
                 description 'Generates the various files needed for each Screen when using Square\'s Flow and Mortar'
                 url 'https://github.com/WeMakeBetterApps/MortarLib'
 
-//                scm {
-//                    connection 'scm:svn:http://foo.googlecode.com/svn/trunk/'
-//                    developerConnection 'scm:svn:https://foo.googlecode.com/svn/trunk/'
-//                    url 'http://foo.googlecode.com/svn/trunk/'
-//                }
+                scm {
+                    connection 'scm:git:http://github.com/wemakebetterapps/mortarlib'
+                    developerConnection 'scm:git:https://github.com/wemakebetterapps/mortarlib'
+                    url 'http://github.com/wemakebetterapps/mortarlib'
+                }
 
                 licenses {
                     license {
