@@ -3,6 +3,10 @@ MortarLib
 
 Supports building Android apps using Square's Flow and Mortar.
 
+APIs aren't finalized yet. Flow and Mortar are still in rapid development, and as such still is this. As I use Flow and Mortar, if I find the need to write a component that is a potential common use case it will be added to this library. Pull requests are welcome.
+
+<hr />
+
 Currently supports Flow 0.7, and Mortar 0.16
 
 Gradle Usage:
