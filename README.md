@@ -20,6 +20,10 @@ compile 'com.squareup.mortar:mortar:0.16'
 
 Creating a new screen using Flow & Mortar is an effort unto itself, so included is a Screen Generator. It will generate your Screen, Presenter, Module, view, and xml file with all the necessary boiler plate. It's recommended that you set this up as a separate java project.
 
+```groovy
+compile 'com.wemakebetterapps:mortar-gen:1.0.+'
+```
+
 ```java
 public class ExampleScreenGenerator {
 
