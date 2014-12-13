@@ -32,7 +32,7 @@ public class ExampleScreenGenerator {
             "com.example.app.screen",
             "view"
         ).customPresenter("com.example.app.presenter", "BasePresenter")
-            .defaultBaseModule("com.example.app.screen", "ActivityScreen.Module")
+            .defaultBaseModule("com.example.app.screen", "MainScreen.Module")
             .presenterPackage("com.example.app.presenter");
 
     new ScreenGenerator(prefs).start();
