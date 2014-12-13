@@ -18,7 +18,7 @@ compile 'com.squareup.mortar:mortar:0.16'
 
 ### Screen Generator Sample
 
-Creating a new screen using Flow & Mortar is an effort unto itself, so included is a Screen Generator. It's recommended that you set this up as a separate java project.
+Creating a new screen using Flow & Mortar is an effort unto itself, so included is a Screen Generator. It will generate your Screen, Presenter, Module, view, and xml file with all the necessary boiler plate. It's recommended that you set this up as a separate java project.
 
 ```java
 public class ExampleScreenGenerator {
