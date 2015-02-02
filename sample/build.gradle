@@ -1,0 +1,48 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        jcenter()
+        maven { url 'http://download.crashlytics.com/maven' }
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:0.13.+'
+
+        // android-apt plugin
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
+    }
+}
+
+apply plugin: 'com.android.application'
+apply plugin: 'android-apt'
+
+apt {
+}
+
+repositories {
+    mavenCentral()
+}
+
+android {
+    compileSdkVersion 21
+    buildToolsVersion "21.1.2"
+
+    defaultConfig {
+        applicationId "mortar.lib.sample"
+        minSdkVersion 14
+        targetSdkVersion 21
+        versionCode 1
+        versionName "1.0.0"
+    }
+}
+
+dependencies {
+    compile project(':lib')
+
+    apt "com.squareup.dagger:dagger-compiler:1.2.2"
+    compile 'com.jakewharton:butterknife:5.1.2'
+    compile "com.squareup.dagger:dagger:1.2.2"
+    compile 'com.squareup.flow:flow:0.7'
+    compile 'com.squareup.mortar:mortar:0.16'
+    compile 'com.google.code.gson:gson:2.2.4'
+}
