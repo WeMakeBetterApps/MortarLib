@@ -1,6 +1,6 @@
 package mortar.lib.activity;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import mortar.MortarScope;
@@ -8,17 +8,17 @@ import mortar.Presenter;
 import mortar.Scoped;
 
 /**
- * Presenter to be registered by the {@link PauseAndResumeActivity}.
+ * Presenter to be registered by the {@link ResumeAndPauseActivity}.
  */
-public class PauseAndResumePresenter extends Presenter<PauseAndResumeActivity>
-    implements PauseAndResumeRegistrar {
+public class ResumeAndPauseOwner extends Presenter<ResumeAndPauseActivity>
+    implements ResumeAndPauseRegistrar {
 
-  private final Set<Registration> registrations = new HashSet<Registration>();
+  private final Set<Registration> registrations = new LinkedHashSet<Registration>();
 
-  public PauseAndResumePresenter() {
+  public ResumeAndPauseOwner() {
   }
 
-  @Override protected MortarScope extractScope(PauseAndResumeActivity view) {
+  @Override protected MortarScope extractScope(ResumeAndPauseActivity view) {
     return view.getMortarScope();
   }
 
@@ -26,7 +26,7 @@ public class PauseAndResumePresenter extends Presenter<PauseAndResumeActivity>
     registrations.clear();
   }
 
-  @Override public void register(MortarScope scope, PausesAndResumes listener) {
+  @Override public void register(MortarScope scope, ResumesAndPauses listener) {
     Registration registration = new Registration(listener);
     scope.register(registration);
 
@@ -53,9 +53,9 @@ public class PauseAndResumePresenter extends Presenter<PauseAndResumeActivity>
   }
 
   private class Registration implements Scoped {
-    final PausesAndResumes registrant;
+    final ResumesAndPauses registrant;
 
-    private Registration(PausesAndResumes registrant) {
+    private Registration(ResumesAndPauses registrant) {
       this.registrant = registrant;
     }
 
@@ -63,7 +63,8 @@ public class PauseAndResumePresenter extends Presenter<PauseAndResumeActivity>
     }
 
     @Override public void onExitScope() {
-      registrant.onPause();
+      if (registrant.isRunning())
+        registrant.onPause();
       registrations.remove(this);
     }
 
