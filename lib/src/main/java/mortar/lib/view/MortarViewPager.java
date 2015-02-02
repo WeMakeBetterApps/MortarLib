@@ -23,8 +23,6 @@ public abstract class MortarViewPager extends ViewPager {
   @Override protected void onFinishInflate() {
     super.onFinishInflate();
     ButterKnifeWrapper.get().inject(this);
-    //noinspection unchecked
-    getPresenter().takeView(this);
   }
 
   @Override protected void onAttachedToWindow() {

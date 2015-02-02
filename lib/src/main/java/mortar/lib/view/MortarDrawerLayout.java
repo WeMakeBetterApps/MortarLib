@@ -29,8 +29,6 @@ public abstract class MortarDrawerLayout extends DrawerLayout {
   @Override protected void onFinishInflate() {
     super.onFinishInflate();
     ButterKnifeWrapper.get().inject(this);
-    //noinspection unchecked
-    getPresenter().takeView(this);
   }
 
   @Override protected void onAttachedToWindow() {

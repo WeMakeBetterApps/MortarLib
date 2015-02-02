@@ -14,18 +14,18 @@ import mortar.lib.screen.FlowOwner;
 
 public abstract class FlowOwnerView extends FrameLayout implements CanShowScreen<Blueprint> {
 
-  private final AbstractScreenConductor<Blueprint> mScreenConductor;
+  private AbstractScreenConductor<Blueprint> mScreenConductor;
 
   public FlowOwnerView(Context context, AttributeSet attrs) {
     super(context, attrs);
     Mortar.inject(context, this);
-    mScreenConductor = createScreenConductor(context);
   }
 
   @Override protected void onFinishInflate() {
     super.onFinishInflate();
+    ButterKnifeWrapper.get().inject(this);
     //noinspection unchecked
-    getPresenter().takeView(this);
+    mScreenConductor = createScreenConductor(getContext());
   }
 
   public Flow getFlow() {
@@ -41,6 +41,18 @@ public abstract class FlowOwnerView extends FrameLayout implements CanShowScreen
 
   protected AbstractScreenConductor createScreenConductor(Context context) {
     return new AnimatedScreenConductor(context, this);
+  }
+
+  @Override protected void onAttachedToWindow() {
+    super.onAttachedToWindow();
+    //noinspection unchecked
+    getPresenter().takeView(this);
+  }
+
+  @Override protected void onDetachedFromWindow() {
+    super.onDetachedFromWindow();
+    //noinspection unchecked
+    getPresenter().dropView(this);
   }
 
 }

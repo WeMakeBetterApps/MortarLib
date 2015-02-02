@@ -24,8 +24,6 @@ public abstract class MortarSwipeRefreshLayout extends SwipeRefreshLayout {
   @Override protected void onFinishInflate() {
     super.onFinishInflate();
     ButterKnifeWrapper.get().inject(this);
-    //noinspection unchecked
-    getPresenter().takeView(this);
   }
 
   @Override public void onAttachedToWindow() {

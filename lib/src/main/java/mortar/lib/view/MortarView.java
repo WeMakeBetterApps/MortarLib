@@ -29,8 +29,6 @@ public abstract class MortarView extends View {
   @Override protected void onFinishInflate() {
     super.onFinishInflate();
     ButterKnifeWrapper.get().inject(this);
-    //noinspection unchecked
-    getPresenter().takeView(this);
   }
 
   @Override protected void onAttachedToWindow() {

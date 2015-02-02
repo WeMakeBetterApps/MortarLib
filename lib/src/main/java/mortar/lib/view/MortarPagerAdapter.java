@@ -12,7 +12,9 @@ public abstract class MortarPagerAdapter extends PagerAdapter {
 
   public abstract Blueprint getScreen(int position);
 
-  public abstract Context getContext();
+  public Context getContext(ViewGroup container) {
+    return container.getContext();
+  }
 
   @Override public boolean isViewFromObject(View view, Object o) {
     return view == o;
@@ -20,14 +22,14 @@ public abstract class MortarPagerAdapter extends PagerAdapter {
 
   @Override public Object instantiateItem(ViewGroup container, int position) {
     Blueprint blueprint = getScreen(position);
-    View child = MortarUtil.createScreen(getContext(), blueprint);
+    View child = MortarUtil.createScreen(getContext(container), blueprint);
     container.addView(child);
     return child;
   }
 
   @Override public void destroyItem(ViewGroup container, int position, Object object) {
     View child = (View) object;
-    MortarUtil.destroyScreen(getContext(), child);
+    MortarUtil.destroyScreen(getContext(container), child);
     container.removeView(child);
   }
 
