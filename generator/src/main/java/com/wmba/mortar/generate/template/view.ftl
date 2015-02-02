@@ -17,9 +17,9 @@ import mortar.lib.view.MortarFrameLayout;
 public class ${viewFileName} extends MortarFrameLayout {
 
   <#if isPresenterSeparateFile>
-  @Inject ${presenterFileName} mPresenter;
+  @Inject ${presenterFileName} presenter;
   <#else>
-  @Inject ${screenFileName}.${presenterFileName} mPresenter;
+  @Inject ${screenFileName}.${presenterFileName} presenter;
   </#if>
 
   public ${viewFileName}(Context context, AttributeSet attrs) {
@@ -27,7 +27,7 @@ public class ${viewFileName} extends MortarFrameLayout {
   }
 
   @Override protected ViewPresenter getPresenter() {
-    return mPresenter;
+    return presenter;
   }
 
 }
