@@ -1,6 +1,10 @@
 package mortar.lib.inject;
 
+import android.content.Context;
+
 import dagger.ObjectGraph;
+import mortar.Mortar;
+import mortar.MortarScope;
 
 public class Injector {
 
@@ -12,6 +16,12 @@ public class Injector {
 
   public static void inject(Object obj) {
     mApplicationGraph.inject(obj);
+  }
+
+  public static <T> T get(Context context, Class<T> clazz) {
+    MortarScope scope = Mortar.getScope(context);
+    ObjectGraph objectGraph = scope.getObjectGraph();
+    return objectGraph.get(clazz);
   }
 
   public static ObjectGraph getApplicationGraph() {
