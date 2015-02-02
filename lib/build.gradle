@@ -8,39 +8,17 @@ sourceSets.main.compileClasspath += configurations.providedCompile
 sourceSets.test.compileClasspath += configurations.providedCompile
 sourceSets.test.runtimeClasspath += configurations.providedCompile
 
-version = '1.0.0'
-group = 'com.wemakebetterapps'
-
-//configurations {
-//    providedCompile
-//    providedCompile.extendsFrom(compile)
-//}
-//
-//configurations.main
+version = '1.2.0'
 
 dependencies {
     providedCompile 'com.squareup.flow:flow:0.7'
     providedCompile 'com.squareup.mortar:mortar:0.16'
     providedCompile 'com.google.code.gson:gson:2.2.+'
-    providedCompile 'com.jakewharton:butterknife:5.1.+'
+    providedCompile 'com.jakewharton:butterknife:6.0.+'
     providedCompile 'com.google.android:android:4.0.1.2'
     providedCompile files('libs/android-support-v4.jar')
+    providedCompile files('libs/android-support-v7-appcompat.jar')
 }
-
-//configure(install.repositories.mavenInstaller) {
-//    pom.project {
-//        artifactId 'mortar-lib'
-//        packaging 'jar'
-//
-//        licenses {
-//            license {
-//                name 'Apache License, Version 2.0'
-//                url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-//                distribution 'repo'
-//            }
-//        }
-//    }
-//}
 
 task sourcesJar(type: Jar, dependsOn:classes) {
     classifier = 'sources'
