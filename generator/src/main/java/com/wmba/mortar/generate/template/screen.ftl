@@ -57,7 +57,7 @@ public class ${screenFileName} implements Blueprint {
           ${viewFileName}.class
       }
   )
-  static class Module {
+  class Module {
     <#if isPresenterSeparateFile>
 
     private final ${presenterFileName} mPresenter;
