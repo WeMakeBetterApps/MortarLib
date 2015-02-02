@@ -1,9 +1,9 @@
 package mortar.lib.activity;
 
-import android.app.Activity;
 import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 
@@ -21,14 +21,15 @@ import static android.content.Intent.CATEGORY_LAUNCHER;
  * Hooks up the {@link mortar.MortarActivityScope}. Loads the main view
  * and lets it know about up button and back button presses.
  */
-public abstract class MortarActivity extends Activity implements ResumeAndPauseActivity {
+public abstract class MortarActionBarActivity extends ActionBarActivity 
+    implements ResumeAndPauseActivity {
 
   private MortarActivityScope mActivityScope;
   private final ResumeAndPauseOwner mResumeAndPauseOwner = new ResumeAndPauseOwner();
   private boolean mIsRunning = false;
 
   protected abstract Blueprint getNewActivityScreen();
-  
+
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
@@ -134,5 +135,4 @@ public abstract class MortarActivity extends Activity implements ResumeAndPauseA
   @Override public boolean isRunning() {
     return mIsRunning;
   }
-
 }
