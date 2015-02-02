@@ -16,4 +16,5 @@ allprojects {
 }
 
 subprojects {
+    group = 'com.wemakebetterapps'
 }
