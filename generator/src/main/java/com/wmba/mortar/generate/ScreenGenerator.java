@@ -109,19 +109,56 @@ public class ScreenGenerator {
     mPrefs = screenGenPrefs;
   }
 
-  public void generate() {
+  public void start() {
+    BufferedReader inputReader = new BufferedReader(new InputStreamReader(System.in));
+
+    while (true) {
+      System.out.println("1. Generate New Screen");
+      System.out.println("2. Delete Existing Screen");
+      System.out.println("3. Exit");
+      System.out.println("Should the presenter be generated as a separate file?");
+
+      String choiceString;
+      try {
+        choiceString = inputReader.readLine().trim();
+      } catch (IOException e) {
+        throw new RuntimeException(e);
+      }
+
+      if (choiceString.equals("1")) {
+        generate();
+        break;
+      } else if (choiceString.equals("2")) {
+        delete();
+        break;
+      } else if (choiceString.equals("3")) {
+        System.exit(0);
+      } else {
+        System.out.println("Invalid choice.");
+      }
+    }
+  }
+
+  private Configuration getFreemarkerConfig() {
     Configuration config = new Configuration();
     config.setClassForTemplateLoading(ScreenGenerator.class, "template");
     config.setIncompatibleImprovements(new Version(2, 3, 20));
     config.setDefaultEncoding("UTF-8");
     config.setLocale(Locale.US);
     config.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
+    return config;
+  }
+
+  public void generate() {
+    Configuration config = getFreemarkerConfig();
 
     TemplatePrefs templatePrefs;
     Map<Template, File> files;
     while (true) {
       String baseFileName = getBaseFileName();
-      templatePrefs = getTemplatePrefs(baseFileName);
+      boolean isPresenterInSeparateFile = mPrefs.presenterPackage != null && isPresenterInSeparateFile();
+
+      templatePrefs = getTemplatePrefs(baseFileName, isPresenterInSeparateFile);
       files = getFiles(config, templatePrefs);
 
       Set<Map.Entry<Template, File>> entrySet = files.entrySet();
@@ -163,6 +200,118 @@ public class ScreenGenerator {
 
     } catch (Exception e) {
       throw new RuntimeException(e);
+    }
+  }
+
+  private void rename() {
+    Configuration config = getFreemarkerConfig();
+    String oldBaseFileName = getBaseFileName();
+
+    TemplatePrefs oldTemplatePrefs = getTemplatePrefs(oldBaseFileName, true);
+    Map<Template, File> oldFiles = getFiles(config, oldTemplatePrefs);
+
+    System.out.println("The following files will be renamed:");
+    for (Map.Entry<Template, File> entry : oldFiles.entrySet()) {
+      if (entry.getValue().exists())
+        System.out.println(entry.getValue().getName());
+    }
+
+    String newBaseFileName = getBaseFileName();
+    TemplatePrefs newTemplatePrefs = getTemplatePrefs(newBaseFileName, true);
+    Map<Template, File> newFiles = getFiles(config, newTemplatePrefs);
+
+    System.out.println("Are you sure you want to proceed?");
+    System.out.println("1. Yes");
+    System.out.println("2. Exit");
+
+    BufferedReader inputReader = new BufferedReader(new InputStreamReader(System.in));
+    while (true) {
+
+      String choiceString;
+      try {
+        choiceString = inputReader.readLine().trim();
+      } catch (IOException e) {
+        throw new RuntimeException(e);
+      }
+
+      if (choiceString.equals("1")) {
+
+        // Rename the old files
+        for (Map.Entry<Template, File> oldEntry : oldFiles.entrySet()) {
+
+          if (oldEntry.getValue().exists()) {
+            File newFile = null;
+            String templateName = oldEntry.getKey().getName();
+
+            for (Map.Entry<Template, File> newEntry : newFiles.entrySet()) {
+              if (newEntry.getKey().getName().equals(templateName)) {
+                // Is the same template
+                newFile = newEntry.getValue();
+              }
+            }
+
+            if (newFile != null) {
+              boolean success = oldEntry.getValue().renameTo(newFile);
+              if (!success)
+                System.out.println("There was an issue deleting " + oldEntry.getValue().getName());
+            }
+          }
+
+        }
+
+        break;
+      } else if (choiceString.equals("2")) {
+        System.exit(0);
+      } else {
+        System.out.println("Invalid choice.");
+      }
+    }
+  }
+
+  private void delete() {
+    Configuration config = getFreemarkerConfig();
+    String oldBaseFileName = getBaseFileName();
+
+    TemplatePrefs oldTemplatePrefs = getTemplatePrefs(oldBaseFileName, true);
+    Map<Template, File> oldFiles = getFiles(config, oldTemplatePrefs);
+
+    List<File> filesToDelete = new ArrayList<File>(oldFiles.size());
+    for (Map.Entry<Template, File> entry : oldFiles.entrySet()) {
+      if (entry.getValue().exists())
+        filesToDelete.add(entry.getValue());
+    }
+
+    System.out.println("The following files will be deleted:");
+    for (File file : filesToDelete)
+      System.out.println(file.getName());
+
+    System.out.println("Are you sure you want to proceed?");
+    System.out.println("1. Yes");
+    System.out.println("2. Exit");
+
+    BufferedReader inputReader = new BufferedReader(new InputStreamReader(System.in));
+    while (true) {
+
+      String choiceString;
+      try {
+        choiceString = inputReader.readLine().trim();
+      } catch (IOException e) {
+        throw new RuntimeException(e);
+      }
+
+      if (choiceString.equals("1")) {
+        for (File file : filesToDelete) {
+          boolean success = file.delete();
+          if (!success)
+            System.out.println("There was an issue deleting " + file.getName());
+        }
+
+        break;
+      } else if (choiceString.equals("2")) {
+        System.exit(0);
+      } else {
+        System.out.println("Invalid choice.");
+      }
     }
   }
 
@@ -239,13 +388,13 @@ public class ScreenGenerator {
     return fileMap;
   }
 
-  private TemplatePrefs getTemplatePrefs(String baseFileName) {
+  private TemplatePrefs getTemplatePrefs(String baseFileName, boolean isPresenterInSeparateFile) {
     TemplatePrefs templatePrefs = new TemplatePrefs();
     templatePrefs.screenFileName = getScreenFileName(baseFileName);
     templatePrefs.viewFileName = getViewFileName(baseFileName);
     templatePrefs.androidAppPackage = mPrefs.androidAppPackage;
     templatePrefs.layoutXMLFileName = getLayoutXMLFileName(baseFileName);
-    templatePrefs.isPresenterSeparateFile = mPrefs.presenterPackage != null;
+    templatePrefs.isPresenterSeparateFile = isPresenterInSeparateFile;
     templatePrefs.presenterFileName = getPresenterFileName(baseFileName, templatePrefs.isPresenterSeparateFile);
     templatePrefs.screenPackage = mPrefs.screenPackage;
     templatePrefs.viewPackage = mPrefs.viewPackage;
@@ -260,7 +409,7 @@ public class ScreenGenerator {
 
     String baseFileName;
     while (true) {
-      System.out.print("Please enter your base file name: ");
+      System.out.print("Please enter the base file name: ");
 
       try {
         baseFileName = inputReader.readLine().trim();
@@ -279,6 +428,31 @@ public class ScreenGenerator {
         return baseFileName;
       else
         System.out.println(errorMessage);
+    }
+  }
+
+  private boolean isPresenterInSeparateFile() {
+    BufferedReader inputReader = new BufferedReader(new InputStreamReader(System.in));
+
+    while (true) {
+      System.out.println("Should the presenter be generated as a separate file?");
+      System.out.println("1. Yes");
+      System.out.println("2. No");
+
+      String choiceString;
+      try {
+        choiceString = inputReader.readLine().trim();
+      } catch (IOException e) {
+        throw new RuntimeException(e);
+      }
+
+      if (choiceString.equals("1")) {
+        return true;
+      } else if (choiceString.equals("2")) {
+        return false;
+      } else {
+        System.out.println("Invalid choice.");
+      }
     }
   }
 
