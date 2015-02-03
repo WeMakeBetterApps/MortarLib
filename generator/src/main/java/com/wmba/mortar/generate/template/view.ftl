@@ -12,9 +12,9 @@ import ${screenPackage}.${screenFileName};
 import javax.inject.Inject;
 
 import mortar.ViewPresenter;
-import mortar.lib.view.MortarFrameLayout;
+import mortar.lib.view.MortarLinearLayout;
 
-public class ${viewFileName} extends MortarFrameLayout {
+public class ${viewFileName} extends MortarLinearLayout {
 
   <#if isPresenterSeparateFile>
   @Inject ${presenterFileName} presenter;
