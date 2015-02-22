@@ -7,7 +7,7 @@ APIs aren't finalized yet. Flow and Mortar are still in rapid development, and a
 
 <hr />
 
-Currently supports Flow 0.7, and Mortar 0.16
+Currently supports Flow 0.7, and Mortar 0.16. Will be updated to Flow 0.9 when it's officially released.
 
 Gradle Usage:
 ```groovy
