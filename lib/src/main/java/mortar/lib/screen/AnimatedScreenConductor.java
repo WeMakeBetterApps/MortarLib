@@ -1,7 +1,6 @@
 package mortar.lib.screen;
 
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -22,14 +21,12 @@ public class AnimatedScreenConductor<S extends Blueprint> extends AbstractScreen
   }
 
   @Override
-  protected void inflateAndAddScreen(Context context, Flow.Direction direction, int layoutId, View oldChild, ViewGroup container) {
-    View newChild = LayoutInflater.from(context).inflate(layoutId, container, false);
-
-    setAnimation(context, direction, oldChild, newChild);
-
+  protected void animateAndAddScreen(Context context, Flow.Direction direction, View oldView,
+                                     View newView, ViewGroup container) {
+    setAnimation(context, direction, oldView, newView);
     // Out with the old, in with the new.
-    if (oldChild != null) container.removeView(oldChild);
-    container.addView(newChild);
+    if (oldView != null) container.removeView(oldView);
+    container.addView(newView);
   }
 
   private void setAnimation(Context context, Flow.Direction direction, View oldChild, View newChild) {

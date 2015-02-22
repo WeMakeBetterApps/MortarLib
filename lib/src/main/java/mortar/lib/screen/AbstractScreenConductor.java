@@ -1,14 +1,15 @@
 package mortar.lib.screen;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import flow.Flow;
-import flow.Layout;
 import mortar.Blueprint;
 import mortar.Mortar;
 import mortar.MortarScope;
+import mortar.lib.util.MortarUtil;
 
 
 /**
@@ -33,11 +34,10 @@ public abstract class AbstractScreenConductor<S extends Blueprint> implements Ca
   }
 
   public void showScreen(S screen, Flow.Direction direction) {
-    MortarScope myScope = Mortar.getScope(mContext);
-    MortarScope newChildScope = myScope.requireChild(screen);
+    MortarScope parentScope = Mortar.getScope(mContext);
+    MortarScope newChildScope = parentScope.requireChild(screen);
 
     View oldChild = getChildView();
-    View newChild;
 
     if (oldChild != null) {
       MortarScope oldChildScope = Mortar.getScope(oldChild.getContext());
@@ -46,28 +46,22 @@ public abstract class AbstractScreenConductor<S extends Blueprint> implements Ca
         return;
       }
 
-      myScope.destroyChild(oldChildScope);
-    }
-
-    int layoutId;
-    {
-      Class<?> screenType = screen.getClass();
-      Layout screenLayoutAnnotation = screenType.getAnnotation(Layout.class);
-      if (screenLayoutAnnotation == null) {
-        throw new IllegalArgumentException(
-            String.format("@%s annotation not found on class %s", Layout.class.getSimpleName(),
-                screenType.getName()));
-      }
-      layoutId = screenLayoutAnnotation.value();
+      parentScope.destroyChild(oldChildScope);
     }
 
     // Create the new child.
     Context childContext = newChildScope.createContext(mContext);
-    inflateAndAddScreen(childContext, direction, layoutId, oldChild, mContainer);
+    View newView = inflateScreen(childContext, screen, mContainer);
+    animateAndAddScreen(childContext, direction, oldChild, newView, mContainer);
   }
 
-  protected abstract void inflateAndAddScreen(Context context, Flow.Direction direction, int layoutId,
-                                              View oldChild, ViewGroup container);
+  protected View inflateScreen(Context context, S screen, ViewGroup container) {
+    int layoutId = MortarUtil.getLayoutId(screen);
+    return LayoutInflater.from(context).inflate(layoutId, container, false);
+  }
+
+  protected abstract void animateAndAddScreen(Context context, Flow.Direction direction,
+                                              View oldView, View newView, ViewGroup container);
 
   private View getChildView() {
     return mContainer.getChildAt(0);
