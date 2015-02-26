@@ -32,11 +32,6 @@ public abstract class MortarActivity extends Activity implements ResumeAndPauseA
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    if (isWrongInstance()) {
-      finish();
-      return;
-    }
-
     Application application = getApplication();
     if ( !(application instanceof MortarApplication) ) {
       throw new RuntimeException("Application must be an instance of " + MortarApplication.class.getName());
