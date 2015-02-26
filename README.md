@@ -11,7 +11,7 @@ Currently supports Flow 0.7, and Mortar 0.16. Will be updated to Flow 0.9 when i
 
 Gradle Usage:
 ```groovy
-compile 'com.wemakebetterapps:mortar-lib:1.2.0'
+compile 'com.wemakebetterapps:mortar-lib:1.2.1'
 compile 'com.squareup.flow:flow:0.7'
 compile 'com.squareup.mortar:mortar:0.16'
 ```
