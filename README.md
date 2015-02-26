@@ -7,11 +7,11 @@ APIs aren't finalized yet. Flow and Mortar are still in rapid development, and a
 
 <hr />
 
-Currently supports Flow 0.7, and Mortar 0.16
+Currently supports Flow 0.7, and Mortar 0.16. Will be updated to Flow 0.9 when it's officially released.
 
 Gradle Usage:
 ```groovy
-compile 'com.wemakebetterapps:mortar-lib:1.0.0'
+compile 'com.wemakebetterapps:mortar-lib:1.2.0'
 compile 'com.squareup.flow:flow:0.7'
 compile 'com.squareup.mortar:mortar:0.16'
 ```
@@ -21,7 +21,7 @@ compile 'com.squareup.mortar:mortar:0.16'
 Creating a new screen using Flow & Mortar is an effort unto itself, so included is a Screen Generator. It will generate your Screen, Presenter, Module, view, and xml file with all the necessary boiler plate. It's recommended that you set this up as a separate java project.
 
 ```groovy
-compile 'com.wemakebetterapps:mortar-gen:1.0.+'
+compile 'com.wemakebetterapps:mortar-gen:1.1.0'
 ```
 
 ```java
