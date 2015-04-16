@@ -6,7 +6,7 @@ buildscript {
         maven { url 'http://download.crashlytics.com/maven' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.13.+'
+        classpath 'com.android.tools.build:gradle:1.1.0'
 
         // android-apt plugin
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
