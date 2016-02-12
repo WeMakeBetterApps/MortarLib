@@ -8,9 +8,7 @@ import mortar.MortarScope;
  * and {@link ResumeAndPauseOwner#activityResumed()} at the obvious times.
  */
 public interface ResumeAndPauseActivity {
-
   boolean isRunning();
   MortarScope getMortarScope();
   ResumeAndPauseOwner getResumeAndPausePresenter();
-
 }

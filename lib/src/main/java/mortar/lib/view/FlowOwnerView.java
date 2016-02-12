@@ -13,7 +13,6 @@ import mortar.lib.screen.CanShowScreen;
 import mortar.lib.screen.FlowOwner;
 
 public abstract class FlowOwnerView extends FrameLayout implements CanShowScreen<Blueprint> {
-
   private AbstractScreenConductor<Blueprint> mScreenConductor;
 
   public FlowOwnerView(Context context, AttributeSet attrs) {
@@ -34,8 +33,7 @@ public abstract class FlowOwnerView extends FrameLayout implements CanShowScreen
 
   protected abstract FlowOwner getPresenter();
 
-  @Override
-  public void showScreen(Blueprint screen, Flow.Direction direction) {
+  @Override public void showScreen(Blueprint screen, Flow.Direction direction) {
     mScreenConductor.showScreen(screen, direction);
   }
 
@@ -54,5 +52,4 @@ public abstract class FlowOwnerView extends FrameLayout implements CanShowScreen
     //noinspection unchecked
     getPresenter().dropView(this);
   }
-
 }

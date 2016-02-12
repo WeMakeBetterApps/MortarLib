@@ -9,7 +9,6 @@ import mortar.Blueprint;
 import mortar.lib.util.MortarUtil;
 
 public abstract class MortarPagerAdapter extends PagerAdapter {
-
   public abstract Blueprint getScreen(int position);
 
   public Context getContext(ViewGroup container) {
@@ -32,5 +31,4 @@ public abstract class MortarPagerAdapter extends PagerAdapter {
     MortarUtil.destroyScreen(getContext(container), child);
     container.removeView(child);
   }
-
 }

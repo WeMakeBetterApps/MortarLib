@@ -36,5 +36,4 @@ public abstract class MortarViewPager extends ViewPager {
     //noinspection unchecked
     getPresenter().dropView(this);
   }
-
 }

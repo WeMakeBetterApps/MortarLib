@@ -41,5 +41,4 @@ public abstract class MortarGridView extends GridView {
     //noinspection unchecked
     getPresenter().dropView(this);
   }
-
 }

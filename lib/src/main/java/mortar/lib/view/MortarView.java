@@ -8,7 +8,6 @@ import mortar.Mortar;
 import mortar.ViewPresenter;
 
 public abstract class MortarView extends View {
-
   public MortarView(Context context) {
     super(context);
     Mortar.inject(context, this);
@@ -42,5 +41,4 @@ public abstract class MortarView extends View {
     //noinspection unchecked
     getPresenter().dropView(this);
   }
-
 }

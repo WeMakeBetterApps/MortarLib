@@ -11,9 +11,7 @@ import mortar.lib.util.GsonParcer;
     library = true
 )
 public class MortarModule {
-
   @Provides @Singleton Parcer<Object> provideParcer() {
-    return new GsonParcer<Object>();
+    return new GsonParcer<>();
   }
-
 }

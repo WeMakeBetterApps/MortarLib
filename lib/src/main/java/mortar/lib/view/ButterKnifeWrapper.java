@@ -5,7 +5,6 @@ import android.view.View;
 import butterknife.ButterKnife;
 
 public class ButterKnifeWrapper {
-
   private boolean mIsButterknifeAvailable = false;
 
   private static ButterKnifeWrapper instance;
@@ -28,7 +27,6 @@ public class ButterKnifeWrapper {
     if (!mIsButterknifeAvailable)
       return;
 
-    ButterKnife.inject(view);
+    ButterKnife.bind(view);
   }
-
 }

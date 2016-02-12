@@ -13,8 +13,8 @@ version = '1.2.1'
 dependencies {
     providedCompile 'com.squareup.flow:flow:0.7'
     providedCompile 'com.squareup.mortar:mortar:0.16'
-    providedCompile 'com.google.code.gson:gson:2.2.+'
-    providedCompile 'com.jakewharton:butterknife:6.0.+'
+    providedCompile 'com.google.code.gson:gson:2.5'
+    providedCompile 'com.jakewharton:butterknife:7.0.1'
     providedCompile 'com.google.android:android:4.0.1.2'
     providedCompile files('libs/android-support-v4.jar')
     providedCompile files('libs/android-support-v7-appcompat.jar')

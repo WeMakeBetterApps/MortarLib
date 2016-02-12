@@ -8,7 +8,6 @@ import mortar.Mortar;
 import mortar.ViewPresenter;
 
 public abstract class MortarFrameLayout extends FrameLayout {
-
   public MortarFrameLayout(Context context) {
     super(context);
     Mortar.inject(context, this);
@@ -44,5 +43,4 @@ public abstract class MortarFrameLayout extends FrameLayout {
     //noinspection unchecked
     getPresenter().dropView(this);
   }
-
 }

@@ -14,7 +14,6 @@ import java.io.StringWriter;
 import flow.Parcer;
 
 public class GsonParcer<T> implements Parcer<T> {
-
   private final Gson gson;
 
   public GsonParcer() {

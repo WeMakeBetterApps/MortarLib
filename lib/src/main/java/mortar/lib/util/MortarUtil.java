@@ -26,9 +26,8 @@ public class MortarUtil {
     Class<? extends Blueprint> screenType = screen.getClass();
     Layout layoutAnnotation = screenType.getAnnotation(Layout.class);
     if (layoutAnnotation == null) {
-      throw new IllegalArgumentException(
-          String.format("@%s annotation not found on class %s", Layout.class.getSimpleName(),
-              screenType.getName()));
+      throw new IllegalArgumentException(String.format("@%s annotation not found on class %s",
+          Layout.class.getSimpleName(), screenType.getName()));
     }
 
     return layoutAnnotation.value();

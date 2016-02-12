@@ -7,7 +7,6 @@ import mortar.Mortar;
 import mortar.MortarScope;
 
 public class Injector {
-
   private static ObjectGraph mApplicationGraph;
 
   public static <T> T get(Class<T> clazz) {
@@ -31,5 +30,4 @@ public class Injector {
   public static void setApplicationGraph(ObjectGraph applicationGraph) {
     mApplicationGraph = applicationGraph;
   }
-
 }
